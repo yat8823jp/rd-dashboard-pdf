@@ -8,16 +8,12 @@ Version: 0.0.1
 Text Domain: rd-dashboard-pdf
 */
 
-if ( ! function_exists( 'wp_handle_upload' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/file.php' );
-}
-
 //----------------------------------------------------------------
 // init
 //----------------------------------------------------------------
 function rddp_init() {
 	add_settings_section( "rddp-section", "File upload", null, "rddp" );
-	add_settings_field( "rddp-file", "pdf file to display on the dashboard", "rddp_file_display", "rddp", "rddp-section", array( 'label_for' => 'rddp-file' ) );
+	add_settings_field( "rddp-file", __( "pdf file to display on the dashboard" ), "rddp_file_display", "rddp", "rddp-section", array( 'label_for' => 'rddp-file' ) );
 	register_setting( "rddp-section", "rddp-file", "rddp_file_upload" );
 
 	add_action( 'wp_dashboard_setup', 'rddp_dashboard_widgets' );
@@ -32,7 +28,7 @@ function rddp_setting_page() {
 ?>
 	<div class="wrap">
 		<h1><?php echo __( 'Upload pdf for display on dashboard.', 'rd-dashboard-pdf' ); ?></h1>
-		<form action="options.php" id="rddp-form" method="post">
+		<form action="options.php" id="rddp-form" method="post" enctype="multipart/form-data">
 			<?php
 				settings_fields( "rddp-section" );
 				do_settings_sections( "rddp" );
@@ -47,21 +43,29 @@ function rddp_setting_page() {
 	file upload
 */
 function rddp_file_upload( $option ) {
-	// if( !empty( $_FILES["rddp-file"]["tmp_name"] ) ) {
-		$urls = wp_handle_upload( $_FILES["rddp-file"], array( 'test_form' => FALSE ), NULL );
 
-		if( isset( $urls["file"] ) ) {
+	if ( ! function_exists( 'wp_handle_upload' ) ) {
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+	}
+
+	if ( ! empty( $_FILES["rddp-file"]["tmp_name"] ) ) {
+		$overrides = array( 'test_form' => false );
+		$urls = wp_handle_upload( $_FILES["rddp-file"], $overrides, NULL );
+		var_dump( $_FILES["rddp-file"] );
+
+		if ( isset( $urls["file"] ) ) {
+			$wp_upload_dir = wp_upload_dir();
 			$attachment = array(
+				'guid'           => $wp_upload_dir . "/" . basename( $urls["url"] ),
 				'post_mime_type' => $urls["type"],
-				'post_title' => 'Uploaded image ' . $urls["file"],
-				'post_content' => '',
-				'post_status' => 'inherit'
+				'post_title'     => 'Uploaded image ' . $urls["file"],
+				'post_content'   => '',
+				'post_status'    => 'inherit'
 			);
-			$attach_id = wp_insert_attachment( $attachment, $urls["file"] );
-
-      media_handle_upload( $attach_id, 0, $attachment, array( 'test_form' => FALSE ) );
-      require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
-
+			$attach_id = wp_insert_attachment( $attachment, $urls["url"] );
+			media_handle_upload( $attach_id, 0, $attachment, array( 'test_form' => FALSE ) );
+			require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
+			$temp = $urls["url"];
 		} else {
 			$upload_feedback = 'There was a problem with your upload.';
 		}
@@ -71,12 +75,13 @@ function rddp_file_upload( $option ) {
 		} else {
 			echo $urls['error'];
 		}
-		$temp = $urls["url"];
-		echo "saaaa";
-	if( $temp ) {
-		return $temp;
+
+		if( isset( $temp ) ) {
+			return $temp;
+		} else {
+			return $option;
+		}
 	} else {
-	// }
 		return $option;
 	}
 }
