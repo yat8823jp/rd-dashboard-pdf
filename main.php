@@ -119,7 +119,6 @@ function rddp_file_display() {
 			}
 		?>
 	<?php
-	var_dump( get_option( 'rd-dashboard-pdf' ) );
 }
 
 /*
