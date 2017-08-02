@@ -34,7 +34,7 @@ For example, user's manual etc.
 
 = 1.0.1 =
 * 2017-08-02 old media file delete.
-* 
+
 = 1.0.0 =
 * 2017-07-28 First release
 
