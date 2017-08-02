@@ -164,10 +164,12 @@ function rddp_dashboard_widget_function() {
 	$data = get_option( 'rd-dashboard-pdf' );
 	if( $data['error'] ) {
 		?><?php echo $data['error']; ?><?php
-	} else {
+	} elseif( isset( $data['url'] ) ) {
 		?>
 			<object data="<?php echo $data['url']; ?>" type="application/pdf" style="width: 100%;"></object>
 			<p><a href="<?php echo $data['url']; ?>" target="_blank">open browser</a></p>
 		<?php
+	} else {
+		echo __( "Pdf file does not exist", "rd-dashboard-pdf" );
 	}
 }
