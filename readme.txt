@@ -15,10 +15,12 @@ For example, user's manual etc.
 
 == Installation ==
 
-1.
+1. Upload the the `rd-dashboard-pdf` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress
+3. From rd-dashboard-pdf in setting of management screen , pdf file upload.
 
 
 == Changelog ==
 
 = 1.0.0 =
-* 2017-07-28 First release/Users/YAT/localsites/hsa/app/public/wp/wp-content/plugins/wp-nologin-redirect/readme.txt
+* 2017-07-28 First release
