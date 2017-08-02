@@ -51,14 +51,6 @@ function rddp_file_upload( $option ) {
 
 	if ( ! empty( $_FILES["rddp-file"]["tmp_name"] ) ) {
 
-		//old media file delete.
-		// if( get_option( 'rd-dashboard-pdf' ) ) {
-		// 	$old_data = get_option( 'rd-dashboard-pdf' );
-		// 	if( $old_data['id'] != "" ) {
-		// 		wp_delete_attachment( $old_data['id'] );
-		// 	}
-		// }
-
 		$overrides = array( 'test_form' => false );
 		$urls = wp_handle_upload( $_FILES["rddp-file"], $overrides, NULL );
 
