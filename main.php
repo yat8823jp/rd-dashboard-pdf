@@ -51,36 +51,44 @@ function rddp_file_upload( $option ) {
 	if ( ! empty( $_FILES["rddp-file"]["tmp_name"] ) ) {
 		$overrides = array( 'test_form' => false );
 		$urls = wp_handle_upload( $_FILES["rddp-file"], $overrides, NULL );
-		var_dump( $_FILES["rddp-file"] );
 
 		if ( isset( $urls["file"] ) ) {
-			$wp_upload_dir = wp_upload_dir();
-			$attachment = array(
-				'guid'           => $wp_upload_dir . "/" . basename( $urls["url"] ),
-				'post_mime_type' => $urls["type"],
-				'post_title'     => 'Uploaded image ' . $urls["file"],
-				'post_content'   => '',
-				'post_status'    => 'inherit'
+			if( $urls["type"] != "application/pdf" ) {
+				$data = array(
+					'error' => __( "Upload file is not pdf.\n", 'rd-dashboard-pdf' )
+				);
+			} else {
+				$wp_upload_dir = wp_upload_dir();
+				$attachment = array(
+					'guid'           => $wp_upload_dir . "/" . basename( $urls["url"] ),
+					'post_mime_type' => $urls["type"],
+					'post_title'     => 'Uploaded image ' . $urls["file"],
+					'post_content'   => '',
+					'post_status'    => 'inherit'
+				);
+				$attach_id = wp_insert_attachment( $attachment, $urls["url"] );
+				media_handle_upload( $attach_id, 0, $attachment, array( 'test_form' => FALSE ) );
+				require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
+
+				$filename = rddp_getfilename( $urls['url'] );
+
+				$data = array(
+					'id'   => $attach_id,
+					'url'  => $urls['url'],
+					'type' => $urls['type'],
+					'name' => $filename,
+					'error' => ''
+				);
+				$temp = $data['url'];
+			}
+		} else {
+			$data = array(
+				'error' => __( "There was a problem with your upload.\n", 'rd-dashboard-pdf' )
 			);
-			$attach_id = wp_insert_attachment( $attachment, $urls["url"] );
-			media_handle_upload( $attach_id, 0, $attachment, array( 'test_form' => FALSE ) );
-			require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
-			$temp = $urls["url"];
-		} else {
-			$upload_feedback = 'There was a problem with your upload.';
+			$temp = $data['error'];
 		}
-
-		if ( $urls && ! isset( $urls['error'] ) ) {
-			echo __( "File is valid, and was successfully uploaded.\n", 'rd-dashboard-pdf' );
-		} else {
-			echo $urls['error'];
-		}
-
-		if( isset( $temp ) ) {
-			return $temp;
-		} else {
-			return $option;
-		}
+		update_option( 'rd-dashboard-pdf', $data );
+		return $temp;
 	} else {
 		return $option;
 	}
@@ -92,8 +100,26 @@ function rddp_file_upload( $option ) {
 function rddp_file_display() {
 	?>
 		<input type="file" name="rddp-file" id="rddp-file">
-		<?php echo get_option( 'rddp-file' ); ?>
+		<?php
+			$data = get_option( 'rd-dashboard-pdf' );
+			if( $data['error'] ) {
+				?></td><td><?php echo $data['error']; ?></td><?php
+			} else {
+				?></td><td><?php echo $data['name']; ?></td><?php
+			}
+		?>
+
 	<?php
+}
+
+/*
+	file check
+*/
+function rddp_getfilename( $dataurl ) {
+	$filename = strrchr( $dataurl, "/"  );
+	$filename = substr( $filename, 1 );
+	$output = $filename;
+	return $output;
 }
 
 //----------------------------------------------------------------
@@ -118,10 +144,15 @@ function rddp_dashboard_widgets() {
 	wp_add_dashboard_widget( 'my_theme_options_widget', 'pdf', 'rddp_dashboard_widget_function' );
 }
 function rddp_dashboard_widget_function() {
-	// echo '<object data="' .  . ' type="application/pdf" style="width: 100%; height:440px;"></object>';
-	// echo '<p><a href="' . get_template_directory_uri() . '/pdf/manual.pdf"' . ' target="_blank">Open pdf in browser.</a></p>';
 	?>
-		<p>テスト</p>
 	<?php
-		echo get_option( 'rddp-file' );
+	$data = get_option( 'rd-dashboard-pdf' );
+	if( $data['error'] ) {
+		?><?php echo $data['error']; ?><?php
+	} else {
+		?>
+			<object data="<?php echo $data['url']; ?>" type="application/pdf" style="width: 100%;"></object>
+			<p><a href="<?php echo $data['url']; ?>" target="_blank">open browser</a></p>
+		<?php
+	}
 }
