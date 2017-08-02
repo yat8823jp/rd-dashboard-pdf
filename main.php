@@ -21,6 +21,7 @@ function rddp_init() {
 
 add_action( "admin_init", "rddp_init" );
 
+
 //----------------------------------------------------------------
 // Setting page
 //----------------------------------------------------------------
@@ -49,6 +50,13 @@ function rddp_file_upload( $option ) {
 	}
 
 	if ( ! empty( $_FILES["rddp-file"]["tmp_name"] ) ) {
+
+		//old media file delete.
+		if( get_option( 'rd-dashboard-pdf' ) ) {
+			$old_data = get_option( 'rd-dashboard-pdf' );
+			wp_delete_attachment( $old_data['id'] );
+		}
+
 		$overrides = array( 'test_form' => false );
 		$urls = wp_handle_upload( $_FILES["rddp-file"], $overrides, NULL );
 
@@ -136,6 +144,12 @@ function rddp_add_menu() {
 }//rpdp_add_menu
 add_action( 'admin_menu', 'rddp_add_menu' );
 
+//----------------------------------------------------------------
+// plugin disabled
+//----------------------------------------------------------------
+// function rddp_delete_file( $option ) {
+//
+// }
 
 //----------------------------------------------------------------
 // Display Dashboard
