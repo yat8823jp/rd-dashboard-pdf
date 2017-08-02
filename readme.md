@@ -9,7 +9,7 @@
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 ## Description
-
+This plugin is for WordPress.
 Display pdf on the dashboard.
 For example, user's manual etc.
 
