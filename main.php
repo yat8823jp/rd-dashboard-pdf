@@ -13,7 +13,7 @@ Text Domain: rd-dashboard-pdf
 //----------------------------------------------------------------
 function rddp_init() {
 	add_settings_section( "rddp-section", "File upload", null, "rddp" );
-	add_settings_field( "rddp-file", __( "pdf file to display on the dashboard" ), "rddp_file_display", "rddp", "rddp-section", array( 'label_for' => 'rddp-file' ) );
+	add_settings_field( "rddp-file", __( "pdf file to display on the dashboard", 'rd-dashboard-pdf' ), "rddp_file_display", "rddp", "rddp-section", array( 'label_for' => 'rddp-file' ) );
 	register_setting( "rddp-section", "rddp-file", "rddp_file_upload" );
 
 	add_action( 'wp_dashboard_setup', 'rddp_dashboard_widgets' );
