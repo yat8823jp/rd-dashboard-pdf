@@ -4,7 +4,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI:
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 0.0.1
+Version: 1.0.1
 Text Domain: rd-dashboard-pdf
 */
 
