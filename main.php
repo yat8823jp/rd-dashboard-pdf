@@ -28,7 +28,7 @@ add_action( "admin_init", "rddp_init" );
 function rddp_setting_page() {
 ?>
 	<div class="wrap">
-		<h1><?php echo __( 'Upload pdf for display on dashboard.', 'rd-dashboard-pdf' ); ?></h1>
+		<h1><?php esc_html_e( 'Upload pdf for display on dashboard.', 'rd-dashboard-pdf' ); ?></h1>
 		<form action="options.php" id="rddp-form" method="post" enctype="multipart/form-data">
 			<?php
 				settings_fields( "rddp-section" );
@@ -113,9 +113,9 @@ function rddp_file_display() {
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
 			if( $data['error'] ) {
-				?></td><td><?php echo $data['error']; ?></td><?php
+				?></td><td><?php echo esc_html( $data['error'] ); ?></td><?php
 			} else {
-				?></td><td><?php echo $data['name']; ?></td><?php
+				?></td><td><?php echo esc_html( $data['name'] ); ?></td><?php
 			}
 		?>
 	<?php
@@ -156,13 +156,13 @@ function rddp_dashboard_widget_function() {
 	<?php
 	$data = get_option( 'rd-dashboard-pdf' );
 	if( $data['error'] ) {
-		?><?php echo $data['error']; ?><?php
+		?><?php echo esc_html( $data['error'] ); ?><?php
 	} elseif( isset( $data['url'] ) ) {
 		?>
-			<object data="<?php echo $data['url']; ?>" type="application/pdf" style="width: 100%;"></object>
-			<p><a href="<?php echo $data['url']; ?>" target="_blank">open browser</a></p>
+			<object data="<?php echo esc_url( $data['url'] ); ?>" type="application/pdf" style="width: 100%;"></object>
+			<p><a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank">open browser</a></p>
 		<?php
 	} else {
-		echo __( "Pdf file does not exist", "rd-dashboard-pdf" );
+		 esc_html_e( "Pdf file does not exist", "rd-dashboard-pdf" );
 	}
 }
