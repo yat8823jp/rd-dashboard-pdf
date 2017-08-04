@@ -1,6 +1,6 @@
 # RD Dashboard pdf
 
-- Contributors: yat8823jp
+- Contributors: yat8823jp, inc2734
 - Tags: dashboard, pdf, manual
 - Requires at least: 4.8.0
 - Tested up to: 4.8.0
@@ -31,6 +31,12 @@ For example, user's manual etc.
 3. 設定→rd-dashboard-pdfから、ダッシュボードに表示させるpdfファイルをアップロードしてください。
 
 ## Changelog
+
+= 1.0.3 =
+* 2017-08-04 Addition of escape processing
+
+= 1.0.2 =
+* 2017-08-03 add-textdomain
 
 = 1.0.1 =
 * 2017-08-02 old media file delete.
