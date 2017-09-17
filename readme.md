@@ -33,7 +33,7 @@ For example, user's manual etc.
 ## Changelog
 
 = 1.0.4 =
-* 2017-09-17 HUML source bug fix
+* 2017-09-17 HTML source bug fix
 
 = 1.0.3 =
 * 2017-08-04 Addition of escape processing
