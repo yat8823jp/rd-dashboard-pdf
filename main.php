@@ -113,9 +113,9 @@ function rddp_file_display() {
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
 			if( $data['error'] ) {
-				?></td><td><?php echo esc_html( $data['error'] ); ?></td><?php
+				?></td><td><?php echo esc_html( $data['error'] ); ?><?php
 			} else {
-				?></td><td><?php echo esc_html( $data['name'] ); ?></td><?php
+				?></td><td><?php echo esc_html( $data['name'] ); ?><?php
 			}
 		?>
 	<?php
