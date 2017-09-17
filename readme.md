@@ -32,6 +32,9 @@ For example, user's manual etc.
 
 ## Changelog
 
+= 1.0.5 =
+* 2017-09-17 readme update
+
 = 1.0.4 =
 * 2017-09-17 HTML source bug fix
 
