@@ -3,7 +3,7 @@
 - Contributors: yat8823jp, inc2734
 - Tags: dashboard, pdf, manual
 - Requires at least: 4.8.0
-- Tested up to: 4.8.0
+- Tested up to: 4.8.1
 - Stable tag: 4.8.0
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,6 +31,9 @@ For example, user's manual etc.
 3. 設定→rd-dashboard-pdfから、ダッシュボードに表示させるpdfファイルをアップロードしてください。
 
 ## Changelog
+
+= 1.0.4 =
+* 2017-09-17 HUML source bug fix
 
 = 1.0.3 =
 * 2017-08-04 Addition of escape processing
