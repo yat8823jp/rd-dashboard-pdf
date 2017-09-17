@@ -108,14 +108,19 @@ function rddp_file_upload( $option ) {
 	file display
 */
 function rddp_file_display() {
-	?>
-		<input type="file" name="rddp-file" id="rddp-file">
+	?>test</td>
+	<td><input type="file" name="rddp-file" id="rddp-file">
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
 			if( $data['error'] ) {
-				?></td><td><?php echo esc_html( $data['error'] ); ?></td><?php
+				?></td>
+				<td>
+					<?php echo esc_html( $data['error'] ); ?>
+				</td><?php
 			} else {
-				?></td><td><?php echo esc_html( $data['name'] ); ?></td><?php
+				?></td>
+				<td><?php echo esc_html( $data['name'] ); ?>
+				<?php
 			}
 		?>
 	<?php
