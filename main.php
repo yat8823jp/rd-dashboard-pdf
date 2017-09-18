@@ -14,7 +14,6 @@ Text Domain: rd-dashboard-pdf
 function rddp_init() {
 	add_settings_section( "rddp-section", "File upload", null, "rddp" );
 	add_settings_field( "rddp-file", __( "pdf file to display on the dashboard", 'rd-dashboard-pdf' ), "rddp_file_display", "rddp", "rddp-section", array( 'label_for' => 'rddp-file' ) );
-	register_setting( "rddp-section", "rddp-file-title", "rddp_file_title" );
 	register_setting( "rddp-section", "rddp-file", "rddp_file_upload" );
 
 	add_action( 'wp_dashboard_setup', 'rddp_dashboard_widgets' );
@@ -84,7 +83,6 @@ function rddp_file_upload( $option ) {
 				require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
 
 				$filename = rddp_getfilename( $urls['url'] );
-				$title = "rddp-file-title";
 
 				$data = array(
 					'id'   => $attach_id,
@@ -92,8 +90,7 @@ function rddp_file_upload( $option ) {
 					'type' => $urls['type'],
 					'pdf-title'=> $pdftitle,
 					'name' => $filename,
-					'error' => '',
-					'title' => $title
+					'error' => ''
 				);
 				$temp = $data['url'];
 			}
@@ -121,18 +118,16 @@ function rddp_file_upload( $option ) {
 */
 function rddp_file_display() {
 	?>
-		<input type="file" name="rddp-file" id="rddp-file"></td>
-		<td>pdf title: <input type="text" name="rddp-file-title" id="rddp-file-title" value="<?php echo esc_attr( get_option('rddp-file-title') ); ?>"></td>
+		<input type="file" name="rddp-file" id="rddp-file">
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
+
 			if( $data['error'] ) {
-				?></td>
-				<td>
-					<?php echo esc_html( $data['error'] ); ?>
-				</td><?php
+				?></td><td><?php echo esc_html( $data['error'] ); ?><?php
 			} else {
-				?></td>
-				<td><?php echo esc_html( $data['name'] ); ?>
+				?>
+			</td><td>pdf title: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
+					</td><td><?php echo esc_html( $data['name'] ); ?>
 				<?php
 			}
 		?>
