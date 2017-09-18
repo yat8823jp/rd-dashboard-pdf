@@ -23,17 +23,19 @@ For example, user's manual etc.
 1. Upload the the `rd-dashboard-pdf` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. From rd-dashboard-pdf in setting of management screen , pdf file upload.
+4. The value entered in 'pdf title' will be the title of the widget.
+
 
 --
 
 1. プラグインディレクトリ（ `/wp-content/plugins/` ）に`rd-dashboard-pdf` をアップロードしてください。
 2. プラグインメニューより、プラグインを有効にしてください。
-3. 設定→rd-dashboard-pdfから、ダッシュボードに表示させるpdfファイルをアップロードしてください。
+3. pdfタイトルで入力したものは、ウィジェットのタイトルになります。
 
 ## Changelog
 
-= 1.0.5 =
-* 2017-09-17 readme update
+= 1.1.0 =
+* 2017-09-18 Add pdf title input form
 
 = 1.0.4 =
 * 2017-09-17 HTML source bug fix

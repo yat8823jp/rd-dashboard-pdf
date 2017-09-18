@@ -62,6 +62,8 @@ function rddp_file_upload( $option ) {
 		$overrides = array( 'test_form' => false );
 		$urls = wp_handle_upload( $_FILES["rddp-file"], $overrides, NULL );
 
+		$pdftitle = $_POST['rddp-title'];
+
 		if ( isset( $urls["file"] ) ) {
 			if( $urls["type"] != "application/pdf" ) {
 				$data = array(
@@ -86,6 +88,7 @@ function rddp_file_upload( $option ) {
 					'id'   => $attach_id,
 					'url'  => $urls['url'],
 					'type' => $urls['type'],
+					'pdf-title'=> $pdftitle,
 					'name' => $filename,
 					'error' => ''
 				);
@@ -100,6 +103,12 @@ function rddp_file_upload( $option ) {
 		update_option( 'rd-dashboard-pdf', $data );
 		return $temp;
 	} else {
+		//pdf title
+		if( get_option( 'rd-dashboard-pdf' ) ) {
+			$data = get_option( 'rd-dashboard-pdf' );
+			$data['pdf-title'] = esc_html( $_POST['rddp-title'] );
+			update_option( 'rd-dashboard-pdf', $data );
+		}
 		return $option;
 	}
 }
@@ -112,10 +121,14 @@ function rddp_file_display() {
 		<input type="file" name="rddp-file" id="rddp-file">
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
+
 			if( $data['error'] ) {
 				?></td><td><?php echo esc_html( $data['error'] ); ?><?php
 			} else {
-				?></td><td><?php echo esc_html( $data['name'] ); ?><?php
+				?>
+			</td><td>pdf title: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
+					</td><td><?php echo esc_html( $data['name'] ); ?>
+				<?php
 			}
 		?>
 	<?php
@@ -149,7 +162,13 @@ add_action( 'admin_menu', 'rddp_add_menu' );
 // Display Dashboard
 //----------------------------------------------------------------
 function rddp_dashboard_widgets() {
-	wp_add_dashboard_widget( 'my_theme_options_widget', 'pdf', 'rddp_dashboard_widget_function' );
+	$data = get_option( 'rd-dashboard-pdf' );
+	if( $data['pdf-title'] ) {
+		$title = esc_html( $data['pdf-title'] );
+	} else {
+		$title =  "pdf";
+	}
+	wp_add_dashboard_widget( 'my_theme_options_widget', $title, 'rddp_dashboard_widget_function' );
 }
 function rddp_dashboard_widget_function() {
 	?>
