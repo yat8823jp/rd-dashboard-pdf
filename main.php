@@ -4,7 +4,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI:
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 1.0.3
+Version: 1.0.5
 Text Domain: rd-dashboard-pdf
 */
 
@@ -14,7 +14,6 @@ Text Domain: rd-dashboard-pdf
 function rddp_init() {
 	add_settings_section( "rddp-section", "File upload", null, "rddp" );
 	add_settings_field( "rddp-file", __( "pdf file to display on the dashboard", 'rd-dashboard-pdf' ), "rddp_file_display", "rddp", "rddp-section", array( 'label_for' => 'rddp-file' ) );
-	register_setting( "rddp-section", "rddp-file-title", "rddp_file_title" );
 	register_setting( "rddp-section", "rddp-file", "rddp_file_upload" );
 
 	add_action( 'wp_dashboard_setup', 'rddp_dashboard_widgets' );
@@ -63,6 +62,8 @@ function rddp_file_upload( $option ) {
 		$overrides = array( 'test_form' => false );
 		$urls = wp_handle_upload( $_FILES["rddp-file"], $overrides, NULL );
 
+		$pdftitle = $_POST['rddp-title'];
+
 		if ( isset( $urls["file"] ) ) {
 			if( $urls["type"] != "application/pdf" ) {
 				$data = array(
@@ -82,15 +83,14 @@ function rddp_file_upload( $option ) {
 				require_once( ABSPATH . "wp-admin" . '/includes/image.php' );
 
 				$filename = rddp_getfilename( $urls['url'] );
-				$title = "rddp-file-title";
 
 				$data = array(
 					'id'   => $attach_id,
 					'url'  => $urls['url'],
 					'type' => $urls['type'],
+					'pdf-title'=> $pdftitle,
 					'name' => $filename,
-					'error' => '',
-					'title' => $title
+					'error' => ''
 				);
 				$temp = $data['url'];
 			}
@@ -103,6 +103,12 @@ function rddp_file_upload( $option ) {
 		update_option( 'rd-dashboard-pdf', $data );
 		return $temp;
 	} else {
+		//pdf title
+		if( get_option( 'rd-dashboard-pdf' ) ) {
+			$data = get_option( 'rd-dashboard-pdf' );
+			$data['pdf-title'] = esc_html( $_POST['rddp-title'] );
+			update_option( 'rd-dashboard-pdf', $data );
+		}
 		return $option;
 	}
 }
@@ -112,18 +118,16 @@ function rddp_file_upload( $option ) {
 */
 function rddp_file_display() {
 	?>
-		<input type="file" name="rddp-file" id="rddp-file"></td>
-		<td>pdf title: <input type="text" name="rddp-file-title" id="rddp-file-title" value="<?php echo esc_attr( get_option('rddp-file-title') ); ?>"></td>
+		<input type="file" name="rddp-file" id="rddp-file">
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
+
 			if( $data['error'] ) {
-				?></td>
-				<td>
-					<?php echo esc_html( $data['error'] ); ?>
-				</td><?php
+				?></td><td><?php echo esc_html( $data['error'] ); ?><?php
 			} else {
-				?></td>
-				<td><?php echo esc_html( $data['name'] ); ?>
+				?>
+			</td><td>pdf title: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
+					</td><td><?php echo esc_html( $data['name'] ); ?>
 				<?php
 			}
 		?>
@@ -158,7 +162,13 @@ add_action( 'admin_menu', 'rddp_add_menu' );
 // Display Dashboard
 //----------------------------------------------------------------
 function rddp_dashboard_widgets() {
-	wp_add_dashboard_widget( 'my_theme_options_widget', 'pdf', 'rddp_dashboard_widget_function' );
+	$data = get_option( 'rd-dashboard-pdf' );
+	if( $data['pdf-title'] ) {
+		$title = esc_html( $data['pdf-title'] );
+	} else {
+		$title =  "pdf";
+	}
+	wp_add_dashboard_widget( 'my_theme_options_widget', $title, 'rddp_dashboard_widget_function' );
 }
 function rddp_dashboard_widget_function() {
 	?>
