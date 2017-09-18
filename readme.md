@@ -30,7 +30,8 @@ For example, user's manual etc.
 
 1. プラグインディレクトリ（ `/wp-content/plugins/` ）に`rd-dashboard-pdf` をアップロードしてください。
 2. プラグインメニューより、プラグインを有効にしてください。
-3. pdfタイトルで入力したものは、ウィジェットのタイトルになります。
+3. 設定→rd-dashboard-pdfから、ダッシュボードに表示させるpdfファイルをアップロードしてください。
+4. pdfタイトルで入力したものは、ウィジェットのタイトルになります。
 
 ## Changelog
 
