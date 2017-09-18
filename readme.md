@@ -13,6 +13,9 @@ This plugin is for WordPress.
 Display pdf on the dashboard.
 For example, user's manual etc.
 
+The value entered in 'pdf title' will be the title of the widget.
+
+
 --
 
 ダッシュボードにpdfを表示します。
@@ -23,15 +26,14 @@ For example, user's manual etc.
 1. Upload the the `rd-dashboard-pdf` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. From rd-dashboard-pdf in setting of management screen , pdf file upload.
-4. The value entered in 'pdf title' will be the title of the widget.
-
+4. The value entered in 'pdf title'.
 
 --
 
 1. プラグインディレクトリ（ `/wp-content/plugins/` ）に`rd-dashboard-pdf` をアップロードしてください。
 2. プラグインメニューより、プラグインを有効にしてください。
 3. 設定→rd-dashboard-pdfから、ダッシュボードに表示させるpdfファイルをアップロードしてください。
-4. pdfタイトルで入力したものは、ウィジェットのタイトルになります。
+4. pdfタイトルにタイトルを入力します
 
 ## Changelog
 
