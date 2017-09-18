@@ -125,13 +125,14 @@ function rddp_file_display() {
 		<td>pdf title: <input type="text" name="rddp-file-title" id="rddp-file-title" value="<?php echo esc_attr( get_option('rddp-file-title') ); ?>"></td>
 		<?php
 			$data = get_option( 'rd-dashboard-pdf' );
-
 			if( $data['error'] ) {
-				?></td><td><?php echo esc_html( $data['error'] ); ?><?php
+				?></td>
+				<td>
+					<?php echo esc_html( $data['error'] ); ?>
+				</td><?php
 			} else {
-				?>
-			</td><td>pdf title: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
-					</td><td><?php echo esc_html( $data['name'] ); ?>
+				?></td>
+				<td><?php echo esc_html( $data['name'] ); ?>
 				<?php
 			}
 		?>
@@ -170,7 +171,7 @@ function rddp_dashboard_widgets() {
 	if( $data['pdf-title'] ) {
 		$title = esc_html( $data['pdf-title'] );
 	} else {
-		$title =  "pdf";
+		$title = "pdf";
 	}
 	wp_add_dashboard_widget( 'my_theme_options_widget', $title, 'rddp_dashboard_widget_function' );
 }
