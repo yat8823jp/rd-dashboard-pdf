@@ -21,6 +21,7 @@ function rddp_init() {
 
 add_action( "admin_init", "rddp_init" );
 
+require_once ( 'listtable.php' );
 
 //----------------------------------------------------------------
 // Setting page
