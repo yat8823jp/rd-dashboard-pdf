@@ -118,6 +118,19 @@ function rddp_file_upload( $option ) {
 	file display
 */
 function rddp_file_display() {
+	$rddpListTable = new RD_List_Table();
+	$rddpListTable -> prepare_items();
+?>
+	<div class="wrap">
+		<div id="icon-users" class="icon32"><br></div>
+		<h2><?php esc_html_e( 'Upload pdf for display on dashboard.', 'rd-dashboard-pdf' ); ?></h2>
+
+		<form id="rddp" method="get">
+			<input type="hidden" name="page" value="<?php echo $_REQUEST[ 'page' ] ?>">
+			<?php $rddpListTable -> display(); ?>
+		</form>
+	</div>
+	<?php
 	?>
 		<input type="file" name="rddp-file" id="rddp-file">
 		<?php
