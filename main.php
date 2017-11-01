@@ -67,7 +67,7 @@ function rddp_setting_page() {
 /**
  * File upload
  */
-function rddp_file_upload( $option ) {
+function rddp_file_upload() {
 
 	if ( ! function_exists( 'wp_handle_upload' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
@@ -85,16 +85,13 @@ function rddp_file_upload( $option ) {
 		$overrides = array(
 			'test_form' => false,
 		);
-		$urls = wp_handle_upload( $_FILES['rddp-file'], $overrides, null );
 
-		$pdftitle = $_POST['rddp-title'];
+		$urls = wp_handle_upload( wp_unslash( $_FILES['rddp-file'] ), $overrides, null );
+
+		$pdftitle = filter_input( INPUT_POST, 'rddp-title' );
 
 		if ( isset( $urls['file'] ) ) {
-			if ( $urls['type'] != 'application/pdf' ) {
-				$data = array(
-					'error' => __( "Upload file is not pdf.\n", 'rd-dashboard-pdf' ),
-				);
-			} else {
+			if ( 'application/pdf' === $urls['type'] ) {
 				$wp_upload_dir = wp_upload_dir();
 				$attachment = array(
 					'guid'           => $wp_upload_dir . '/' . basename( $urls['url'] ),
@@ -112,7 +109,7 @@ function rddp_file_upload( $option ) {
 						'test_form' => false,
 					)
 				);
-				require_once( ABSPATH . 'wp-admin' . '/includes/image.php' );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
 
 				$filename = rddp_getfilename( $urls['url'] );
 
@@ -125,6 +122,10 @@ function rddp_file_upload( $option ) {
 					'error' => '',
 				);
 				$temp = $data['url'];
+			} else {
+				$data = array(
+					'error' => __( "Upload file is not pdf.\n", 'rd-dashboard-pdf' ),
+				);
 			}
 		} else {
 			$data = array(
@@ -136,11 +137,12 @@ function rddp_file_upload( $option ) {
 		return $temp;
 	} else {
 		if ( get_option( 'rd-dashboard-pdf' ) ) {
+			$prrdtitle = filter_input( INPUT_POST, 'rddp-title' );
 			$data = get_option( 'rd-dashboard-pdf' );
-			$data['pdf-title'] = esc_html( $_POST['rddp-title'] );
+			$data['pdf-title'] = esc_html( $prrdtitle );
 			update_option( 'rd-dashboard-pdf', $data );
 		}
-		return $option;
+		return false;
 	}
 }
 
@@ -148,15 +150,13 @@ function rddp_file_upload( $option ) {
  * File display
  */
 function rddp_file_display() {
-	$rddpListTable = new RD_List_Table();
-	$rddpListTable -> prepare_items();
+	$page = filter_input( INPUT_GET, 'page' );
 	?>
 </td></tr>
 	<form id="rddp" method="get">
 		<div class="wrap">
 			<div id="icon-users" class="icon32"><br></div>
-			<input type="hidden" name="page" value="<?php echo $_REQUEST['page']; ?>">
-			<?php $rddpListTable -> display(); ?>
+			<input type="hidden" name="page" value="<?php echo esc_html( $page ); ?>">
 		</div>
 	<tr><td>
 		<input type="file" name="rddp-file" id="rddp-file">
@@ -164,12 +164,12 @@ function rddp_file_display() {
 	$data = get_option( 'rd-dashboard-pdf' );
 	if ( $data['error'] ) {
 		?>
-		</td><td><?php echo esc_html( $data['error'] ); ?>
+	</td><td><?php echo esc_html( $data['error'] ); ?>
 		<?php
 	} else {
 		?>
-			</td><td>pdf title: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
-			</td><td><?php echo esc_html( $data['name'] ); ?>
+			</td><td><strong>pdf title</strong>: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
+			</td><td><strong>pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
 		<?php
 	}
 		?>
@@ -178,13 +178,20 @@ function rddp_file_display() {
 }//end rddp_file_display()
 
 /**
- * file check
+ * File check
+ *
+ * @param int $dataurl file url.
+ * @return string|void
  */
 function rddp_getfilename( $dataurl ) {
-	$filename = strrchr( $dataurl, '/' );
-	$filename = substr( $filename, 1 );
-	$output = $filename;
-	return $output;
+	if ( isset( $dataurl ) ) {
+		$filename = strrchr( $dataurl, '/' );
+		$filename = substr( $filename, 1 );
+		$output = $filename;
+		return $output;
+	} else {
+		return $dataurl;
+	}
 }
 
 /**
