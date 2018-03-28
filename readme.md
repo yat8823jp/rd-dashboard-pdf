@@ -37,6 +37,9 @@ The value entered in 'pdf title' will be the title of the widget.
 
 ## Changelog
 
+= 1.1.2 =
+* 2018-3-28 Avoid situations that are not displayed when SSL is connected
+
 = 1.1.1 =
 * 2017-11-01 Refactoring
 

@@ -3,7 +3,7 @@
  * Short description
  *
  * @package rd-dashboard-pdf
- * @version 1.1.1
+ * @version 1.1.2
  */
 
 /*
@@ -11,7 +11,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI: https://github.com/yat8823jp/rd-dashboard-pdf
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 1.1.1
+Version: 1.1.2
 Text Domain: rd-dashboard-pdf
 */
 
@@ -226,12 +226,13 @@ function rddp_dashboard_widgets() {
  */
 function rddp_dashboard_widget_function() {
 	$data = get_option( 'rd-dashboard-pdf' );
+	$url = preg_replace( '/^.*:/', "", $data['url'] );
 	if ( $data['error'] ) {
 		echo esc_html( $data['error'] );
 	} elseif ( isset( $data['url'] ) ) {
 	?>
-		<object data="<?php echo esc_url( $data['url'] ); ?>" type="application/pdf" style="width: 100%;"></object>
-		<p><a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank">open browser</a></p>
+		<object data="<?php echo esc_url( $url ); ?>" type="application/pdf" style="width: 100%;"></object>
+		<p><a href="<?php echo esc_url( $url ); ?>" target="_blank">open browser</a></p>
 	<?php
 	} else {
 		 esc_html_e( 'Pdf file does not exist', 'rd-dashboard-pdf' );
