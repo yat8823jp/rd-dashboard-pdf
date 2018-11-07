@@ -3,8 +3,8 @@
 - Contributors: yat8823jp, inc2734
 - Tags: dashboard, pdf, manual
 - Requires at least: 4.8.0
-- Tested up to: 4.9.0
-- Stable tag: 4.8.0
+- Tested up to: 4.9.8
+- Stable tag: 4.9.0
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,12 @@ The value entered in 'pdf title' will be the title of the widget.
 4. pdfタイトルにタイトルを入力します
 
 ## Changelog
+
+= 1.1.4 =
+* 2018-11-7 Support WordPress version 4.9.8
+
+= 1.1.3 =
+* 2018-5-18 Support WordPress version 4.9.6
 
 = 1.1.2 =
 * 2018-3-28 Avoid situations that are not displayed when SSL is connected
