@@ -37,6 +37,9 @@ The value entered in 'pdf title' will be the title of the widget.
 
 ## Changelog
 
+= 1.1.9 =
+* 2019-7-1 Support WordPress version 5.2.2
+
 = 1.1.8 =
 * 2019-5-9 Support WordPress version 5.2.0
 
