@@ -3,7 +3,7 @@
  * Short description
  *
  * @package rd-dashboard-pdf
- * @version 1.1.12
+ * @version 1.2.13
  */
 
 /*
@@ -11,7 +11,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI: https://github.com/yat8823jp/rd-dashboard-pdf
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 1.1.12
+Version: 1.1.13
 Text Domain: rd-dashboard-pdf
 */
 
@@ -88,7 +88,9 @@ function rddp_file_upload() {
 			'test_form' => false,
 		);
 
-		$urls = wp_handle_upload( wp_unslash( $_FILES['rddp-file'] ), $overrides, null );
+		$file = wp_unslash( $_FILES['rddp-file'] );
+
+		$urls = wp_handle_upload( $file, $overrides, null );
 
 		$pdftitle = filter_input( INPUT_POST, 'rddp-title' );
 
@@ -215,10 +217,14 @@ add_action( 'admin_menu', 'rddp_add_menu' );
  */
 function rddp_dashboard_widgets() {
 	$data = get_option( 'rd-dashboard-pdf' );
-	if ( $data['pdf-title'] ) {
-		$title = esc_html( $data['pdf-title'] );
+	if( ! $data["error"] ) {
+		if ( $data['pdf-title'] ) {
+			$title = esc_html( $data['pdf-title'] );
+		} else {
+			$title = 'pdf';
+		}
 	} else {
-		$title = 'pdf';
+		$title = 'No pdf file';
 	}
 	wp_add_dashboard_widget( 'my_theme_options_widget', $title, 'rddp_dashboard_widget_function' );
 }
@@ -228,7 +234,12 @@ function rddp_dashboard_widgets() {
  */
 function rddp_dashboard_widget_function() {
 	$data = get_option( 'rd-dashboard-pdf' );
-	$url = preg_replace( '/^.*:/', "", $data['url'] );
+	if( ! $data["error"] ) {
+		$url = preg_replace( '/^.*:/', "", $data['url'] );
+	} else {
+		esc_html_e( "Pdf file does not exist. Please upload the pdf file from the settings", 'rd-dashboard-pdf' );
+		return false;
+	}
 	if ( $data['error'] ) {
 		echo esc_html( $data['error'] );
 	} elseif ( isset( $data['url'] ) ) {
@@ -237,6 +248,6 @@ function rddp_dashboard_widget_function() {
 		<p><a href="<?php echo esc_url( $url ); ?>" target="_blank">open browser</a></p>
 	<?php
 	} else {
-		 esc_html_e( 'Pdf file does not exist', 'rd-dashboard-pdf' );
+		esc_html_e( "Pdf file does not exist. Please upload the pdf file from the settings", 'rd-dashboard-pdf' );
 	}
 }

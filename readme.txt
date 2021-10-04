@@ -3,8 +3,8 @@ Contributors: yat8823jp, inc2734
 
 Tags: dashboard, pdf, manual
 Requires at least: 4.8.0
-Tested up to: 5.4.0
-Stable tag: 1.1.12
+Tested up to: 5.8.1
+Stable tag: 1.1.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,11 @@ The value entered in 'pdf title' will be the title of the widget.
 
 
 == Changelog ==
+
+= 1.1.13 =
+* 2020-10-4
+	- Support WordPress version 5.8.1
+	- Error fixed.
 
 = 1.1.12 =
 * 2020-4-2 Support WordPress version 5.4.0
