@@ -3,8 +3,8 @@
 - Contributors: yat8823jp, inc2734
 - Tags: dashboard, pdf, manual
 - Requires at least: 4.8.0
-- Tested up to: 5.8.1
-- Stable tag: 1.1.13
+- Tested up to: 5.8.3
+- Stable tag: 1.1.14
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,9 @@ The value entered in 'pdf title' will be the title of the widget.
 4. pdfタイトルにタイトルを入力します
 
 ## Changelog
+
+= 1.1.14 =
+* 2022-01-17 Tested up 5.8.3
 
 = 1.1.13 =
 * 2020-10-4
