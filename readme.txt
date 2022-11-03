@@ -3,8 +3,8 @@ Contributors: yat8823jp, inc2734
 
 Tags: dashboard, pdf, manual
 Requires at least: 4.8.0
-Tested up to: 6.0.0
-Stable tag: 1.1.16
+Tested up to: 6.1.0
+Stable tag: 1.1.17
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +24,9 @@ The value entered in 'pdf title' will be the title of the widget.
 
 
 == Changelog ==
+
+= 1.1.17 =
+* 2022-11-03 Tested up 6.1.0
 
 = 1.1.16 =
 * 2022-05-25 Tested up 6.0.0
