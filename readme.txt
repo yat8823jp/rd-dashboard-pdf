@@ -25,6 +25,9 @@ The value entered in 'pdf title' will be the title of the widget.
 
 == Changelog ==
 
+= 2.0.0 =
+* 2023-08-10 File delete function release
+
 = 1.1.20 =
 * 2023-08-09 Tested up 6.3
 

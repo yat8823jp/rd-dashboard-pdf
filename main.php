@@ -3,7 +3,7 @@
  * Short description
  *
  * @package rd-dashboard-pdf
- * @version 1.1.20
+ * @version 2.0.0
  */
 
 /*
@@ -11,7 +11,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI: https://github.com/yat8823jp/rd-dashboard-pdf
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 1.1.20
+Version: 2.0.0
 Text Domain: rd-dashboard-pdf
 */
 
@@ -42,7 +42,8 @@ function rddp_init() {
 		'rddp-file',
 		'rddp_file_upload'
 	);
-
+	wp_enqueue_style(  'rd-dashboard-pdf-css', plugin_dir_url( __FILE__ ) . 'assets/app.css' );
+	wp_enqueue_script( 'rd-dashboard-pdf-js', plugin_dir_url( __FILE__ ) . 'assets/app.js', "", "", true );
 	add_action( 'wp_dashboard_setup', 'rddp_dashboard_widgets' );
 }
 
@@ -62,6 +63,13 @@ function rddp_setting_page() {
 				submit_button();
 			?>
 		</form>
+		<dialog class="delete-dialog">
+			<p><?php esc_html_e( "Do you want to delete uploaded files?", 'rd-dashboard-pdf' ); ?></p>
+			<div class="delete-dialog__buttons">
+				<button name="delete" class="delete-button-close"><?php esc_html_e( "Delete", 'rd-dashboard-pdf' ); ?></button>
+				<button class="delete-button-cancel"><?php esc_html_e( "Cancel", 'rd-dashboard-pdf' ); ?></button>
+			</div>
+		</dialog>
 	</div>
 <?php
 }
@@ -89,10 +97,7 @@ function rddp_file_upload() {
 		);
 
 		$file = wp_unslash( $_FILES['rddp-file'] );
-
 		$urls = wp_handle_upload( $file, $overrides, null );
-
-		$pdftitle = filter_input( INPUT_POST, 'rddp-title' );
 
 		if ( isset( $urls['file'] ) ) {
 			if ( 'application/pdf' === $urls['type'] ) {
@@ -121,7 +126,6 @@ function rddp_file_upload() {
 					'id'   => $attach_id,
 					'url'  => $urls['url'],
 					'type' => $urls['type'],
-					'pdf-title' => $pdftitle,
 					'name' => $filename,
 					'error' => '',
 				);
@@ -141,20 +145,28 @@ function rddp_file_upload() {
 		return $temp;
 	} else {
 		if ( get_option( 'rd-dashboard-pdf' ) ) {
-			$prrdtitle = filter_input( INPUT_POST, 'rddp-title' );
 			$data = get_option( 'rd-dashboard-pdf' );
-			$data['pdf-title'] = esc_html( $prrdtitle );
 			update_option( 'rd-dashboard-pdf', $data );
 		}
 		return false;
 	}
 }
 
+function rddp_file_delete() {
+	if ( isset( $_POST['delete'] ) ) {
+		$data = get_option( 'rd-dashboard-pdf' );
+		delete_option( 'rd-dashboard-pdf', $data );
+		echo '<script>alert("' . $data . esc_html_e( "Deleted", 'rd-dashboard-pdf' ) . '");</script>';
+	} else {
+	}
+}
+rddp_file_delete();
 /**
  * File display
  */
 function rddp_file_display() {
 	$page = filter_input( INPUT_GET, 'page' );
+	$file_name = "";
 	?>
 </td></tr>
 	<form id="rddp" method="get">
@@ -162,22 +174,25 @@ function rddp_file_display() {
 			<div id="icon-users" class="icon32"><br></div>
 			<input type="hidden" name="page" value="<?php echo esc_html( $page ); ?>">
 		</div>
-	<tr><td>
-		<input type="file" name="rddp-file" id="rddp-file">
-	<?php
-	$data = get_option( 'rd-dashboard-pdf' );
-	if ( $data['error'] ) {
-		?>
-	</td><td><?php echo esc_html( $data['error'] ); ?>
+		<tr><td>
+			<input type="file" name="rddp-file" id="rddp-file">
 		<?php
-	} else {
+			$data = get_option( 'rd-dashboard-pdf' );
+			if ( $data ) {
+				$file_name = $data['name'];
+				if ( $data['error'] ) {
+					?>
+						</td><td><?php echo esc_html( $data['error'] ); ?>
+					<?php
+				} else {
+					?>
+						</td><td><strong>pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
+						</td><td><button class="delete-pdf"><?php esc_html_e( "Delete", 'rd-dashboard-pdf' ); ?></button>
+					<?php
+				}
+			}
 		?>
-			</td><td><strong>pdf title</strong>: <input type="rddp-title" name="rddp-title" id="rddp-title" value="<?php echo esc_html( $data['pdf-title'] ); ?>">
-			</td><td><strong>pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
-		<?php
-	}
-		?>
-		</form>
+	</form>
 <?php
 }//end rddp_file_display()
 
@@ -217,16 +232,18 @@ add_action( 'admin_menu', 'rddp_add_menu' );
  */
 function rddp_dashboard_widgets() {
 	$data = get_option( 'rd-dashboard-pdf' );
-	if( ! $data["error"] ) {
-		if ( $data['pdf-title'] ) {
-			$title = esc_html( $data['pdf-title'] );
+	if ( $data ) {
+		if( ! $data["error"] ) {
+			if ( $data['name'] ) {
+				$file_name = esc_html( $data['name'] );
+			} else {
+				$file_name = 'pdf';
+			}
 		} else {
-			$title = 'pdf';
+			$file_name = 'No pdf file';
 		}
-	} else {
-		$title = 'No pdf file';
+		wp_add_dashboard_widget( 'my_theme_options_widget', $file_name, 'rddp_dashboard_widget_function' );
 	}
-	wp_add_dashboard_widget( 'my_theme_options_widget', $title, 'rddp_dashboard_widget_function' );
 }
 
 /**
