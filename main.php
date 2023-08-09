@@ -64,10 +64,10 @@ function rddp_setting_page() {
 			?>
 		</form>
 		<dialog class="delete-dialog">
-			<p><?php esc_html_e( "Do you want to delete uploaded files?", 'rd-dashboard-pdf' ); ?></p>
+			<p><?php __( "Do you want to delete uploaded files?", 'rd-dashboard-pdf' ); ?></p>
 			<div class="delete-dialog__buttons">
-				<button name="delete" class="delete-button-close"><?php esc_html_e( "Delete", 'rd-dashboard-pdf' ); ?></button>
-				<button class="delete-button-cancel"><?php esc_html_e( "Cancel", 'rd-dashboard-pdf' ); ?></button>
+				<button name="delete" class="delete-button-close"><?php __( "Delete", 'rd-dashboard-pdf' ); ?></button>
+				<button class="delete-button-cancel"><?php __( "Cancel", 'rd-dashboard-pdf' ); ?></button>
 			</div>
 		</dialog>
 	</div>
@@ -156,7 +156,7 @@ function rddp_file_delete() {
 	if ( isset( $_POST['delete'] ) ) {
 		$data = get_option( 'rd-dashboard-pdf' );
 		delete_option( 'rd-dashboard-pdf', $data );
-		echo '<script>alert("' . $data . esc_html_e( "Deleted", 'rd-dashboard-pdf' ) . '");</script>';
+		echo '<script>alert("' . $data . __( "Deleted", 'rd-dashboard-pdf' ) . '");</script>';
 	} else {
 	}
 }
@@ -187,7 +187,7 @@ function rddp_file_display() {
 				} else {
 					?>
 						</td><td><strong>pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
-						</td><td><button class="delete-pdf"><?php esc_html_e( "Delete", 'rd-dashboard-pdf' ); ?></button>
+						</td><td><button class="delete-pdf"><?php __( "Delete", 'rd-dashboard-pdf' ); ?></button>
 					<?php
 				}
 			}
@@ -254,7 +254,7 @@ function rddp_dashboard_widget_function() {
 	if( ! $data["error"] ) {
 		$url = preg_replace( '/^.*:/', "", $data['url'] );
 	} else {
-		esc_html_e( "Pdf file does not exist. Please upload the pdf file from the settings", 'rd-dashboard-pdf' );
+		__( "Pdf file does not exist. Please upload the pdf file from the settings", 'rd-dashboard-pdf' );
 		return false;
 	}
 	if ( $data['error'] ) {
@@ -265,6 +265,6 @@ function rddp_dashboard_widget_function() {
 		<p><a href="<?php echo esc_url( $url ); ?>" target="_blank">open browser</a></p>
 	<?php
 	} else {
-		esc_html_e( "Pdf file does not exist. Please upload the pdf file from the settings", 'rd-dashboard-pdf' );
+		__( "Pdf file does not exist. Please upload the pdf file from the settings", 'rd-dashboard-pdf' );
 	}
 }
