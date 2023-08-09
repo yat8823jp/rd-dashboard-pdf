@@ -20,7 +20,7 @@ The value entered in 'pdf title' will be the title of the widget.
 1. Upload the the `rd-dashboard-pdf` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. From rd-dashboard-pdf in setting of management screen , pdf file upload.
-4. The value entered in 'pdf title' will be the title of the widget.
+4. Click the delete button to delete the file.
 
 
 == Changelog ==
