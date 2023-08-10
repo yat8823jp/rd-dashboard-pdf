@@ -4,7 +4,7 @@
 - Tags: dashboard, pdf, manual
 - Requires at least: 4.8.0
 - Tested up to: 6.3
-- Stable tag: 1.1.20
+- Stable tag: 2.0.1
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,16 +26,19 @@ The value entered in 'pdf title' will be the title of the widget.
 1. Upload the the `rd-dashboard-pdf` folder to the `/wp-content/plugins/` directory.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. From rd-dashboard-pdf in setting of management screen , pdf file upload.
-4. The value entered in 'pdf title'.
+4. Click the delete button to delete the file.
 
 --
 
 1. プラグインディレクトリ（ `/wp-content/plugins/` ）に`rd-dashboard-pdf` をアップロードしてください。
 2. プラグインメニューより、プラグインを有効にしてください。
 3. 設定→rd-dashboard-pdfから、ダッシュボードに表示させるpdfファイルをアップロードしてください。
-4. pdfタイトルにタイトルを入力します
+4. ファイルを削除する場合は、削除ボタンをクリックしてください
 
 ## Changelog
+
+= 2.0.1 =
+* 2023-08-10 Echo bug fix.
 
 = 1.1.20 =
 * 2023-08-09 Tested up 6.3

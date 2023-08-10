@@ -3,7 +3,7 @@
  * Short description
  *
  * @package rd-dashboard-pdf
- * @version 2.0.0
+ * @version 2.0.1
  */
 
 /*
@@ -11,7 +11,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI: https://github.com/yat8823jp/rd-dashboard-pdf
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 2.0.0
+Version: 2.0.1
 Text Domain: rd-dashboard-pdf
 */
 
@@ -64,10 +64,10 @@ function rddp_setting_page() {
 			?>
 		</form>
 		<dialog class="delete-dialog">
-			<p><?php __( "Do you want to delete uploaded files?", 'rd-dashboard-pdf' ); ?></p>
+			<p><?php _e( "Do you want to delete uploaded files?", 'rd-dashboard-pdf' ); ?></p>
 			<div class="delete-dialog__buttons">
-				<button name="delete" class="delete-button-close"><?php __( "Delete", 'rd-dashboard-pdf' ); ?></button>
-				<button class="delete-button-cancel"><?php __( "Cancel", 'rd-dashboard-pdf' ); ?></button>
+				<button name="delete" class="delete-button-close"><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
+				<button class="delete-button-cancel"><?php _e( "Cancel", 'rd-dashboard-pdf' ); ?></button>
 			</div>
 		</dialog>
 	</div>
@@ -187,7 +187,7 @@ function rddp_file_display() {
 				} else {
 					?>
 						</td><td><strong>pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
-						</td><td><button class="delete-pdf"><?php __( "Delete", 'rd-dashboard-pdf' ); ?></button>
+						</td><td><button class="delete-pdf"><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
 					<?php
 				}
 			}
