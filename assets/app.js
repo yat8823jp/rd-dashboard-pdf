@@ -30,6 +30,15 @@ if ( delete_button_cancel !== null || delete_button_overlay ) {
 /*
  * upload buttn judgment
  */
-const file_select_status = document.querySelector( '.rddp-file' );
-// console.log( file_select_status );
-console.log( file_select_status.files.length );
+const file_select = document.querySelector( '#rddp-file' );
+const submit_button = document.querySelector( '.button-primary' );
+
+if ( file_select ) {
+	submit_button.disabled = true;
+
+	file_select.addEventListener( 'change', ( e ) => {
+		if ( file_select.files.length ) {
+			submit_button.disabled = false;
+		}
+	} );
+}

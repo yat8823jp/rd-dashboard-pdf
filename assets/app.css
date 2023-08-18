@@ -2,11 +2,23 @@
     position: relative;
     z-index: 10000;
 }
+
 .delete-dialog__buttons {
     display: flex;
     justify-content: center;
     gap: 8px;
 }
+
 ::backdrop {
     background: rgba( 0, 0, 0, .7 );
+}
+
+.form-table tbody tr th:first-child {
+	width: 50%;
+}
+
+@media screen and ( max-width: 782px ) {
+	.form-table tbody tr th:first-child {
+		width: 100%;
+	}
 }
