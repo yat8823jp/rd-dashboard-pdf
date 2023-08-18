@@ -186,7 +186,7 @@ function rddp_file_display() {
 								<?php
 						} else {
 							?>
-								<strong>Uploaded pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
+								<strong><?php _e( "Uploaded pdf file name", 'rd-dashboard-pdf' ); ?></strong>: <?php echo esc_html( $data['name'] ); ?>
 							</td>
 							<td>
 								<button class="delete-pdf"><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
@@ -197,7 +197,7 @@ function rddp_file_display() {
 							<input type="file" name="rddp-file" id="rddp-file">
 							</td>
 							<td>
-								<?php submit_button( "Upload" ); ?>
+								<?php submit_button( __( "Upload", 'rd-dashboard-pdf' ) ); ?>
 							</td>
 						<?php
 					}
