@@ -4,7 +4,7 @@
 - Tags: dashboard, pdf, manual
 - Requires at least: 4.8.0
 - Tested up to: 6.3
-- Stable tag: 2.0.1
+- Stable tag: 3.0.0
 - License: GPLv2 or later
 - License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,9 @@ The value entered in 'pdf title' will be the title of the widget.
 4. ファイルを削除する場合は、削除ボタンをクリックしてください
 
 ## Changelog
+
+= 3.0.0 =
+* 2023-08-19 UI change.
 
 = 2.0.1 =
 * 2023-08-10 Echo bug fix.

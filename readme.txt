@@ -25,7 +25,7 @@ The value entered in 'pdf title' will be the title of the widget.
 
 == Changelog ==
 
-= 3.0. =
+= 3.0.0 =
 * 2023-08-19 UI change.
 
 = 2.0.1 =
