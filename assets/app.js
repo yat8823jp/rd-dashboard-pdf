@@ -19,7 +19,7 @@ if ( delete_dialog !== null ) {
 		delete_dialog.close();
 	} );
 }
-if ( delete_button_cancel !== null || delete_button_overlay ) {
+if ( delete_button_cancel !== null ) {
 	delete_button_cancel.addEventListener( 'click', ( e ) => {
 		e.preventDefault();
 		delete_dialog.close();
