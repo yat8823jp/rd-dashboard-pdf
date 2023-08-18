@@ -3,7 +3,7 @@
  * Short description
  *
  * @package rd-dashboard-pdf
- * @version 2.0.1
+ * @version 3.0.0
  */
 
 /*
@@ -11,7 +11,7 @@ Plugin Name: RD Dashboard pdf
 Plugin URI: https://github.com/yat8823jp/rd-dashboard-pdf
 Description: Display pdf on the dashboard. For example, user's manual etc.
 Author: YAT
-Version: 2.0.1
+Version: 3.0.0
 Text Domain: rd-dashboard-pdf
 */
 
@@ -60,13 +60,12 @@ function rddp_setting_page() {
 			<?php
 				settings_fields( 'rddp-section' );
 				do_settings_sections( 'rddp' );
-				submit_button();
 			?>
 		</form>
 		<dialog class="delete-dialog">
 			<p><?php _e( "Do you want to delete uploaded files?", 'rd-dashboard-pdf' ); ?></p>
 			<div class="delete-dialog__buttons">
-				<button name="delete" class="delete-button-close"><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
+				<button name="delete" class="delete-button-close" autofocus=""><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
 				<button class="delete-button-cancel"><?php _e( "Cancel", 'rd-dashboard-pdf' ); ?></button>
 			</div>
 		</dialog>
@@ -161,6 +160,7 @@ function rddp_file_delete() {
 	}
 }
 rddp_file_delete();
+
 /**
  * File display
  */
@@ -174,24 +174,36 @@ function rddp_file_display() {
 			<div id="icon-users" class="icon32"><br></div>
 			<input type="hidden" name="page" value="<?php echo esc_html( $page ); ?>">
 		</div>
-		<tr><td>
-			<input type="file" name="rddp-file" id="rddp-file">
-		<?php
-			$data = get_option( 'rd-dashboard-pdf' );
-			if ( $data ) {
-				$file_name = $data['name'];
-				if ( $data['error'] ) {
-					?>
-						</td><td><?php echo esc_html( $data['error'] ); ?>
-					<?php
-				} else {
-					?>
-						</td><td><strong>pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
-						</td><td><button class="delete-pdf"><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
-					<?php
-				}
-			}
-		?>
+		<tr>
+			<td>
+				<?php
+					$data = get_option( 'rd-dashboard-pdf' );
+					if ( $data ) {
+						$file_name = $data['name'];
+						if ( $data['error'] ) {
+							?>
+								</td><td><?php echo esc_html( $data['error'] ); ?>
+								<?php
+						} else {
+							?>
+								<strong>Uploaded pdf file name</strong>: <?php echo esc_html( $data['name'] ); ?>
+							</td>
+							<td>
+								<button class="delete-pdf"><?php _e( "Delete", 'rd-dashboard-pdf' ); ?></button>
+							<?php
+						}
+					} else {
+						?>
+							<input type="file" name="rddp-file" id="rddp-file">
+							</td>
+							<td>
+								<?php submit_button( "Upload" ); ?>
+							</td>
+						<?php
+					}
+				?>
+			</td>
+		</tr>
 	</form>
 <?php
 }//end rddp_file_display()
