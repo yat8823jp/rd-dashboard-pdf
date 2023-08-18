@@ -7,21 +7,6 @@
     justify-content: center;
     gap: 8px;
 }
-.delete-dialog ~ .delete-dialog__overlay {
-    visibility: hidden;
-}
-.delete-dialog.is-open ~ .delete-dialog__overlay {
-    background-color: rgba( 0, 0, 0, 0.7 );
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: block;
-    z-index: 9999;
-    visibility: visible;
-}
-
 ::backdrop {
     background: rgba( 0, 0, 0, .7 );
 }
